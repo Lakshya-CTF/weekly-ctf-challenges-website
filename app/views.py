@@ -44,6 +44,7 @@ def register(request):
 			login(request,u)
 			return redirect('/challenges')
 		except Exception as e:
+			print(e)
 			messages.error(request,'Invalid form!')
 			return render(request,'app/register.html')
 	return render(request,'app/register.html')
