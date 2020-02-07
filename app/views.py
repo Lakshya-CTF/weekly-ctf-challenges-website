@@ -69,8 +69,8 @@ def custom_login(request):
 @login_required(login_url = '/login/')
 def challenges(request):
 	questions = Question.objects.all().order_by('qid')
-	if 'time' not in request.session:
-		request.session['time'] = time.time()
+	#if 'time' not in request.session:
+	#	request.session['time'] = time.time()
 	if request.method == 'POST':
 		flag = request.POST.get('flag')
 		qid = request.POST.get('flagid')
@@ -120,27 +120,9 @@ def validate_username(request):
     return JsonResponse(data)
 
 
-def timer(request):
-	if request.method == 'GET':
-		return HttpResponse(eventtime - int(time.time() - request.session.get('time')))
-
-# Challenge related 
-
-@gzip_page
-def inspect(request):
-	return render(request,'app/inspect.html')
+# def timer(request):
+# 	if request.method == 'GET':
+# 		return HttpResponse(eventtime - int(time.time() - request.session.get('time')))
 
 
 
-@gzip_page
-@csrf_exempt
-def challengelogin(request):
-	response = render(request,'app/chlogin.html',{'flag':'You are not admin!'})
-	response.set_cookie('admin','false')
-	if request.method == 'POST':
-		email = request.POST.get('email')
-		password = request.POST.get('password')
-		if request.COOKIES['admin'].lower() == 'true' and password == 'rockyou123':
-			return render(request,'app/chlogin.html',{'flag':'pict_CTF{1n53cur3_c00k13}'})
-
-	return response
