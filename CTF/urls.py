@@ -29,9 +29,7 @@ urlpatterns = [
     url(r'^aboutus/',views.about_us),
     url(r'^logout/',views.custom_logout),
     url(r'^rules/',views.rules),
-    url(r'^inspect/',views.inspect),
-    url(r'^challengelogin/',views.challengelogin),
     url(r'^uservalidator/',views.validate_username),
-    url(r'timer/',views.timer),
+    # url(r'timer/',views.timer),
 
 ]
