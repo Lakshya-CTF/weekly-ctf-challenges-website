@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="{% static 'app/main.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="{% static 'app/flipclock.css' %}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script src="{% static 'app/flipclock.js' %}"></script>
+<title>Weekly CTF</title>
+</head>
+<body style="background-color: black">
+<nav class="desktop-nav" style="background-color:rgb(0,0,0) ;">
+<div class="d-flex bd-highlight">
+  <div class="p-2 flex-grow-1 bd-highlight"><a class="navbar-brand" href="/" style="color:white;">PICT InC Lakshya</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/"  style="color:white;">Home</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/aboutus"  style="color:white;">About Us</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/rules"  style="color:white;">Rules</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/leaderboard"  style="color:white;">Leaderboard</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/logout"  style="color:white;">Logout</a></div>
+  
+</div>
+</nav>
+<nav class="mobile-nav navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="p-2 flex-grow-1 bd-highlight"><a class="navbar-brand" href="#" style="color:white;">PICT InC Lakshya</a></div>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="border: none; background-color:black">
+          <i style="color:white;font-size: 25px" class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li>  <div class="p-2 bd-highlight"><a class="nav-link" href="/"  style="color:white;">Home</a></div></li>
+          <li>  <div class="p-2 bd-highlight"><a class="nav-link" href="/aboutus"  style="color:white;">About Us</a></div></li> 
+          <li><div class="p-2 bd-highlight"><a class="nav-link" href="/rules"  style="color:white;">Rules</a></div></li>
+          <li>   <div class="p-2 bd-highlight"><a class="nav-link" href="/leaderboard"  style="color:white;">Leaderboard</a></div></li>
+          <li>   <div class="p-2 bd-highlight"><a class="nav-link" href="/logout"  style="color:white;">Logout </a></div></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="jumbotron" style="text-align: center; position: relative;" >
+  <h3 class="user_score" style="left: 30px;top: 10px;position: absolute;">
+    Welcome: {{ request.user.username }}
+  </h3> 
+  <h3 class="user_score" style="right: 30px;top: 10px;position: absolute;">
+    Score: {{ request.user.points }}
+  </h3>  
+  <div class="clock" style="margin:2em;"></div>
+  <div class="message"></div>
+  <h2 class="display-4">Challenges</h2>
+  <hr class="my-4">
+  <div class="accordion" id="accordionExample">
+    {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+                  {{ message }}
+          </div>
+    {% endfor %}
+    
+  {% for question in questions %}
+  <div class="card">
+    <div class="card-header" id="heading{{ question.qid|add:"1" }}" data-toggle="collapse" data-target="#collapse{{ question.qid|add:"1" }}" aria-expanded="true" aria-controls="collapse{{ question.qid|add:"1" }}">
+      <h4 class="mb-0">
+          Challenge #{{ question.qid|add:"1" }}
+      </h4>
+    </div>
+
+    <div id="collapse{{ question.qid|add:"1" }}" class="collapse" aria-labelledby="heading{{ question.qid|add:"1" }}" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8 align-self-center">
+              <h4>{{ question.qtitle }}</h4>
+              <h5>Points: {{ question.points }}</h5>
+              <h5>Solved: {{ question.solved }}</h5>
+              {{ question.description|safe }}
+              <form class="form-inline justify-content-center" method="POST" action="/challenges/">
+                {% csrf_token %}
+                <input type="hidden" name="flagid" id="flagid" value="{{ question.qid }}">
+                <div class="form-group mx-sm-3 mb-2" >
+                  <label for="inputPassword2" class="sr-only">Enter Flag</label>
+                  <input type="text" class="form-control" name="flag" id="flag">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  <hr class="my-4">
+  <h3> For registrations and more information contact:</h3>
+  <p>Anushka Virgaonkar: 9765843388<br>Chaitanya Rahalkar: 8788739226</p>
+</div>
+</body>
+<script type="text/javascript">
+   
+var clock;
+
+    function getTime(){
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          // document.getElementById("demo").innerHTML = this.responseText;
+          clock = $('.clock').FlipClock(this.responseText, {
+            clockFace: 'HourlyCounter',
+            countdown: true,
+            callbacks: {
+              stop: function() {
+                 window.location.href= "/logout";
+              }
+            }
+        });
+        }
+       };
+        xhttp.open("GET", "/timer", true);
+        xhttp.send();
+        setTimeout(getTime,60000);
+      }
+
+
+    $(document).ready(function() {
+      getTime();
+
+  });
+
+
+</script>
+</html>

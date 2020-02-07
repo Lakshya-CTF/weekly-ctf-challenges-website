@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="{% static 'app/main.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<title>Weekly CTF</title>
+</head>
+<body style="background-color: black">
+<nav class="desktop-nav" style="background-color:rgb(0,0,0) ;">
+<div class="d-flex bd-highlight">
+  <div class="p-2 flex-grow-1 bd-highlight"><a class="navbar-brand" href="/" style="color:white;">PICT InC Lakshya</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/"  style="color:white;">Home</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/aboutus"  style="color:white;">About Us</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/rules"  style="color:white;">Rules</a></div>
+  {% if user.is_authenticated %}
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/challenges"  style="color:white;">
+  Challenges</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/logout"  style="color:white;">
+  Logout</a></div>
+  {% else %}
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/register"  style="color:white;">Register</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/login"  style="color:white;">Login</a></div>
+  {% endif %}
+</div>
+</nav>
+<nav class="mobile-nav navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="p-2 flex-grow-1 bd-highlight"><a class="navbar-brand" href="#" style="color:white;">PICT InC Lakshya</a></div>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="border: none; background-color:black">
+          <i style="color:white;font-size: 25px" class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li>  <div class="p-2 bd-highlight"><a class="nav-link" href="/"  style="color:white;">Home</a></div></li>
+          <li>  <div class="p-2 bd-highlight"><a class="nav-link" href="/aboutus"  style="color:white;">About Us</a></div></li> 
+          <li><div class="p-2 bd-highlight"><a class="nav-link" href="/rules"  style="color:white;">Rules</a></div></li>
+          <li>   <div class="p-2 bd-highlight"><a class="nav-link" href="/register"  style="color:white;">Register</a></div></li>
+          <li><div class="p-2 bd-highlight"><a class="nav-link" href="/login"  style="color:white;">Login</a></div></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="jumbotron" style="text-align: center;" >
+
+  <h2 class="display-4">Leaderboard</h2>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Username</th>
+      <th scope="col">College</th>
+      <th scope="col">Points</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for rank,user in leaderboard %}
+    <tr>
+      <th scope="row">{{ rank }}</th>
+      <td>{{ user.username }}</td>
+      <td>{{ user.college }}</td>
+      <td>{{ user.points }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  <hr class="my-4">
+  <h3> For registrations and more information contact:</h3>
+  <p>Anushka Virgaonkar: 9765843388<br>Chaitanya Rahalkar: 8788739226</p>
+</div>
+
+</body>
+</html>
