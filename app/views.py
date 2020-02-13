@@ -42,6 +42,7 @@ def register(request):
 		is_valid = validate_email(u.email,verify=True)
 		if is_valid is None:
 			messages.error(request,'Enter a valid email address.')
+			return render(request,'app/register.html')
 		try:
 			u.clean_fields()
 			u.save()
