@@ -40,7 +40,7 @@ def register(request):
 		u.last_name = request.POST.get('lastname')
 		u.email = request.POST.get('email')
 		is_valid = validate_email(u.email,verify=True)
-		if not is_valid:
+		if is_valid is None:
 			messages.error(request,'Enter a valid email address.')
 		try:
 			u.clean_fields()
