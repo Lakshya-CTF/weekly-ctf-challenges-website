@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="{% static 'app/main.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<title>Weekly CTF</title>
+</head>
+<body style="background-color: black">
+<nav class="desktop-nav" style="background-color:rgb(0,0,0) ;">
+<div class="d-flex bd-highlight">
+  <div class="p-2 flex-grow-1 bd-highlight"><a class="navbar-brand" href="/" style="color:white;">PICT InC Lakshya</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/"  style="color:white;">Home</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/aboutus"  style="color:white;">About Us</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/rules"  style="color:white;">Rules</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/leaderboard"  style="color:white;">Leaderboard</a></div>
+  <div class="p-2 bd-highlight"><a class="nav-link" href="/logout"  style="color:white;">Logout</a></div>
+  
+</div>
+</nav>
+<nav class="mobile-nav navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="p-2 flex-grow-1 bd-highlight"><a class="navbar-brand" href="#" style="color:white;">PICT InC Lakshya</a></div>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" style="border: none; background-color:black">
+          <i style="color:white;font-size: 25px" class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li>  <div class="p-2 bd-highlight"><a class="nav-link" href="/"  style="color:white;">Home</a></div></li>
+          <li>  <div class="p-2 bd-highlight"><a class="nav-link" href="/aboutus"  style="color:white;">About Us</a></div></li> 
+          <li><div class="p-2 bd-highlight"><a class="nav-link" href="/rules"  style="color:white;">Rules</a></div></li>
+          <li>   <div class="p-2 bd-highlight"><a class="nav-link" href="/leaderboard"  style="color:white;">Leaderboard</a></div></li>
+          <li>   <div class="p-2 bd-highlight"><a class="nav-link" href="/logout"  style="color:white;">Logout </a></div></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="jumbotron" style="text-align: center; position: relative;" >
+  <h3 class="user_score" style="left: 30px;top: 10px;position: absolute;">
+    Welcome {{ request.user.username }}
+  </h3> 
+  <h3 class="user_score" style="right: 30px;top: 10px;position: absolute;">
+    Score {{ request.user.points }}
+  </h3>  
+
+  <h2 class="display-4">Challenges</h2>
+  <hr class="my-4">
+  <div class="accordion" id="accordionExample">
+    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+    
+  <div class="card">
+    <div class="card-header" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+      <h4 class="mb-0">
+          Challenge #1
+      </h4>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8 align-self-center">
+              <h4>Caesar Cipher</h4>
+              <h5>Points: 100</h5>
+              <h5>Solved: {{ questions.0.solved }}</h5>
+              <p>The flag is hidden in this message:<br><br>nvvk av zll fvb mypluk. olyl pz fvby mshn wpja_jam{jhlzhy_pz_jvvs}.<br><br>Format of the flag is pict_CTF{s0m3_t3xt}.<br> Note: Separate each word with '_' <br>Enter the flag in this format.</p>
+              <p>Hint: Caesar Cipher is used to encrypt(encode) a message. For more information <a href="http://practicalcryptography.com/ciphers/caesar-cipher/">go here</a>. You have to decrypt this encrypted message.<a href="https://cryptii.com/pipes/caesar-cipher"> Use this</a>
+              <form class="form-inline justify-content-center" method="POST" action="/challenges/">
+                {% csrf_token %}
+                <input type="hidden" name="flagid" id="flagid" value="0">
+                <div class="form-group mx-sm-3 mb-2" >
+                  <label for="inputPassword2" class="sr-only">Enter Flag</label>
+                  <input type="text" class="form-control" name="flag" id="flag">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      <h4 class="mb-0">
+          Challenge #2
+      </h4>
+    </div>
+
+    <div id="collapseTwo" href="#collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8 align-self-center">
+              <h4>Strings</h4>
+              <h5>Points: 200</h5>
+              <h5>Solved: {{ questions.1.solved }}</h5>
+              <p>Find the flag in this <a href="https://github.com/chaitanyarahalkar/CTF/raw/master/file.bin" download>file</a><br><br>Format of the flag is pict_CTF{s0m3_t3xt}.<br>Enter the flag in this format.</p>
+              <p>Hint: You have to open the file in the terminal.<br> Search for 'strings' and 'grep' (linux commands).<br> They will help in opening the file.<br><a href="https://www.howtoforge.com/linux-strings-command/">strings</a><br><a href="https://www.geeksforgeeks.org/grep-command-in-unixlinux/">grep</a></p>
+
+              <form class="form-inline justify-content-center" method="POST" action="/challenges/">
+                {% csrf_token %}
+                <input type="hidden" name="flagid" id="flagid" value="1">
+                <div class="form-group mx-sm-3 mb-2" >
+                  <label for="inputPassword2" class="sr-only">Enter Flag</label>
+                  <input type="text" class="form-control" name="flag" id="flag">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingThree" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+      <h4 class="mb-0">
+          Challenge #3
+      </h4>
+    </div>
+
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8 align-self-center">
+              <h4>Steganography</h4>
+              <h5>Points: 150</h5>
+              <h5>Solved: {{ questions.2.solved }}</h5>
+              <p>Find the flag hidden in this <a href="https://github.com/chaitanyarahalkar/CTF/raw/master/hidesteg.jpg" download>image</a></p>
+          <p>Hint:<br>Steganography is the technique of hiding secret data within an image.<br> For more information, click
+            <a href="https://towardsdatascience.com/steganography-hiding-an-image-inside-another-77ca66b2acb1">here</a><br>
+            Format of the flag is pict_CTF{some_cryptic_text}.<br> Use <a href="http://futureboy.us/stegano/decinput.html">this</a>
+            to decode the image.          
+          </p>
+              <form class="form-inline justify-content-center" method="POST" action="/challenges/">
+                {% csrf_token %}
+                <input type="hidden" name="flagid" id="flagid" value="2">
+                <div class="form-group mx-sm-3 mb-2" >
+                  <label for="inputPassword2" class="sr-only">Enter Flag</label>
+                  <input type="text" class="form-control" name="flag" id="flag">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingFour" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+      <h4 class="mb-0">
+          Challenge #4
+      </h4>
+    </div>
+
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8 align-self-center">
+              <h4>Inspecto Inspector</h4>
+              <h5>Points: 100</h5>
+              <h5>Solved: {{ questions.3.solved }}</h5>
+              <p>Find the flag in <a href="/inspect">this </a> site.</p>
+          <p>Hint:<br>Try inspecting the site.<br> For more information, click
+            <a href="https://neilpatel.com/blog/how-to-read-source-code/">here</a><br>
+            Format of the flag is pict_CTF{some_cryptic_text}.<br>          
+          </p>
+                <form class="form-inline justify-content-center" action="/challenges/" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="flagid" id="flagid" value="3">
+                <div class="form-group mx-sm-3 mb-2" >
+                  <label for="inputPassword2" class="sr-only">Enter Flag</label>
+                  <input type="text" class="form-control" id="flag" name="flag">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header" id="headingFive" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+      <h4 class="mb-0">
+          Challenge #5
+      </h4>
+    </div>
+
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+      <div class="card-body">
+        <div class="row justify-content-center">
+          <div class="col-md-8 align-self-center">
+              <h4>Vigenere Cipher</h4>
+              <h5>Points: 150</h5>
+              <h5>Solved: {{ questions.4.solved }}</h5>
+               <p>Decrypt this message to find the flag<br>ye aqpx aon crx gncqybpg mje vjaenegiel. joig th uex aon ct hwr fcig gvxpt. agrx ioxu yhwr ynaz rivv_cmh{vbieggrx_ks_ugtmgr_mjag_eaxuak}</p>
+          <p>Hint: use <a href="https://cryptii.com/pipes/vigenere-cipher">this</a></p>
+          <p>Don't know what Vigenere cipher is? <a href="https://crypto.interactive-maths.com/vigenegravere-cipher.html"> click here </a><br>Key: Which Linux command prints the contents of a file? It is also an animal</p>
+              <form class="form-inline justify-content-center" method="POST" action="/challenges/">
+                {% csrf_token %}
+                <input type="hidden" name="flagid" id="flagid" value="4">
+                <div class="form-group mx-sm-3 mb-2" >
+                  <label for="inputPassword2" class="sr-only">Enter Flag</label>
+                  <input type="text" class="form-control" id="flag" name="flag">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  </div>
+  <hr class="my-4">
+  <h3> For registrations and more information contact:</h3>
+  <p>Anushka Virgaonkar: 9765843388<br>Chaitanya Rahalkar: 8788739226</p>
+</div>
+</body>
+</html>

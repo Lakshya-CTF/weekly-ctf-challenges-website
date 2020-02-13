@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<title>
+		
+
+	</title>
+	<link rel="stylesheet" href="{% static 'app/style.css' %}">
+</head>
+<body>
+
+</body>
+
+<form class="box" method="POST" action="/challengelogin/" onsubmit="showFlag()">
+  <h1>Login</h1>
+    <input type="text" readonly id="email" name="email" value="admin@lakshya.com">
+    <input type="password" id="password" name="password" placeholder="Password">
+  <input type="submit" value="Confirm Identity"></input>
+</form>
+
+
+<script type="text/javascript">
+	
+
+	function showFlag(){
+		alert('{{ flag|default_if_none:"You are not admin!" }}');
+	}
+	
+
+</script>
+</html>
