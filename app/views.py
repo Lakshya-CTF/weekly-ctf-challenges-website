@@ -7,6 +7,7 @@ from django.views.decorators.gzip import gzip_page
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from validate_email import validate_email
 import time
 # Create your views here.
 
@@ -38,6 +39,9 @@ def register(request):
 		u.first_name = request.POST.get('firstname')
 		u.last_name = request.POST.get('lastname')
 		u.email = request.POST.get('email')
+		is_valid = validate_email(u.email,verify=True)
+		if not is_valid:
+			messages.error(request,'Enter a valid email address.')
 		try:
 			u.clean_fields()
 			u.save()
