@@ -8,6 +8,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from validate_email import validate_email
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.html import strip_tags
+from django.core.mail import send_mail
+
 import time
 # Create your views here.
 
@@ -123,6 +128,32 @@ def validate_username(request):
     if data['is_taken']:
         data['error_message'] = 'A user with this username already exists.'
     return JsonResponse(data)
+
+@receiver(post_save, sender = Question)
+def notifier(sender, instance, **kwargs):
+
+	subject = '''New weekly challenges have been added to Lakshya 2020!'''
+	message_html = ''' Hello, 
+
+				  New challenges have been added to Lakshya 2020's weekly challenge
+				  portal! Go check them out <a href='https://lakshya2020.herokuapp.com'> here </a>! 
+
+				  See you on top of the leaderboard. 
+
+				  Regards,
+				  Team Lakshya
+
+			   '''
+	message_raw = strip_tags(message_html)
+
+	from_email = 'lakshya@pictinc.org'
+
+	recipient_list = ['chaitanyarahalkar4@gmail.com','anushka18599@gmail.com']
+
+	for recipient in recipient_list:
+		send_mail(subject, message, from_email, [recipient],fail_silently = True, html_message = message_html)
+
+
 
 
 # def timer(request):
