@@ -151,7 +151,7 @@ def notifier(sender, instance, **kwargs):
 	recipient_list = ['chaitanyarahalkar4@gmail.com','anushka18599@gmail.com']
 
 	for recipient in recipient_list:
-		send_mail(subject, message_raw, from_email, [recipient],fail_silently = True, html_message = message_html)
+		send_mail(subject, message_raw, from_email, [recipient], html_message = message_html)
 
 
 
