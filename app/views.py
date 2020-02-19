@@ -129,7 +129,7 @@ def validate_username(request):
         data['error_message'] = 'A user with this username already exists.'
     return JsonResponse(data)
 
-@receiver(post_save, sender = Question)
+#@receiver(post_save, sender = Question)
 def notifier(sender, instance, **kwargs):
 
 	subject = '''New weekly challenges have been added to Lakshya 2020!'''
