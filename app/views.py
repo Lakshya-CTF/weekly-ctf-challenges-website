@@ -133,15 +133,15 @@ def validate_username(request):
 def notifier(sender, instance, **kwargs):
 
 	subject = '''New weekly challenges have been added to Lakshya 2020!'''
-	message_html = ''' Hello, 
+	message_html = ''' Hello, <br>
 
-				  New challenges have been added to Lakshya 2020's weekly challenge
-				  portal! Go check them out <a href='https://lakshya2020.herokuapp.com'> here </a>! 
+				  New challenges have been added to Lakshya 2020's weekly challenge <br>
+				  portal! Go check them out <a href='https://lakshya2020.herokuapp.com'>here</a>! <br>
 
-				  See you on top of the leaderboard. 
+				  See you on top of the leaderboard. <br>
 
-				  Regards,
-				  Team Lakshya
+				  Regards, <br>
+				  Team Lakshya <br>
 
 			   '''
 	message_raw = strip_tags(message_html)
