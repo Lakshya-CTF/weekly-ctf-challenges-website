@@ -148,7 +148,7 @@ def notifier(sender, instance, **kwargs):
 
 	from_email = 'lakshya@pictinc.org'
 
-	recipient_list = [user.email for user in CustomUser]
+	recipient_list = [user.email for user in CustomUser.objects.all()]
 
 	for recipient in recipient_list:
 		send_mail(subject, message_raw, from_email, [recipient], html_message = message_html)
