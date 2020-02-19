@@ -135,8 +135,8 @@ def notifier(sender, instance, **kwargs):
 	subject = '''New weekly challenges have been added to Lakshya 2020!'''
 	message_html = ''' Hello, <br>
 
-				  New challenges have been added to Lakshya 2020's weekly challenge <br>
-				  portal! Go check them out <a href='https://lakshya2020.herokuapp.com'>here</a>! <br>
+				  New challenges have been added to Lakshya 2020's weekly challenge portal! <br> 
+				  Go check them out <a href='https://lakshya2020.herokuapp.com'>here</a>! <br>
 
 				  See you on top of the leaderboard. <br>
 
@@ -148,7 +148,7 @@ def notifier(sender, instance, **kwargs):
 
 	from_email = 'lakshya@pictinc.org'
 
-	recipient_list = ['chaitanyarahalkar4@gmail.com','anushka18599@gmail.com']
+	recipient_list = [user.email for user in CustomUser]
 
 	for recipient in recipient_list:
 		send_mail(subject, message_raw, from_email, [recipient], html_message = message_html)
