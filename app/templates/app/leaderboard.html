@@ -61,7 +61,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for rank,user in leaderboard %}
+    {% for rank,user in page_obj %}
     <tr>
       <th scope="row">{{ rank }}</th>
       <td>{{ user.username }}</td>
@@ -71,7 +71,23 @@
     {% endfor %}
   </tbody>
 </table>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+	
   <hr class="my-4">
   <h3> For more information contact:</h3>
   <p>Harsh Saglani: 7798762945</p>

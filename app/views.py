@@ -12,7 +12,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import strip_tags
 from django.core.mail import send_mail
-
+from django.core.paginator import Paginator
 import time
 # Create your views here.
 
@@ -106,13 +106,17 @@ def challenges(request):
 
 @gzip_page
 def leaderboard(request):
-	users = CustomUser.objects.exclude(username='lakshya2020').order_by('-points')[:10]
+	users = CustomUser.objects.exclude(username='lakshya2020').order_by('-points')[:20]
 	leaderboard = list()
-
+	
 	for rank,user in zip(range(1,len(users)+1),users):
 		leaderboard.append((rank,user))
 
-	return render(request,'app/leaderboard.html',{'leaderboard':leaderboard})
+	paginator = Paginator(leaderboard,10)
+	page_number = request.GET.get('page')
+	page_obj = paginator.get_page(page_number)
+	
+	return render(request,'app/leaderboard.html',{'page_obj':page_obj})
 
 
 def custom_logout(request):
