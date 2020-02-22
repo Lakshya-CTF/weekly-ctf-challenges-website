@@ -84,7 +84,7 @@
           <div class="col-md-8 align-self-center">
               <h4>{{ question.qtitle }}</h4>
               <h5>Points: {{ question.points }}</h5>
-              <h5>Solved: {{ question.solved }}</h5>
+              <h5>Solves: {{ question.solved }}</h5>
               {{ question.description|safe }}
               <form class="form-inline justify-content-center" method="POST" action="/challenges/">
                 {% csrf_token %}
