@@ -101,6 +101,7 @@ def challenges(request):
 				solved.question = question
 				solved.user = request.user
 				question.solved+=1
+				flags[question.qid] = True
 				solved.save()
 				messages.success(request,'Flag is correct!')
 			else:
