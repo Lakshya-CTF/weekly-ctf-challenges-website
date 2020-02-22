@@ -78,7 +78,15 @@ def custom_login(request):
 @gzip_page
 @login_required(login_url = '/login/')
 def challenges(request):
+
 	questions = Question.objects.all().order_by('qid')
+	flags = [False for i in range(len(questions))]
+	solved_list = SolvedQuestions.objects.filter(user=request.user)
+
+	for q in solved_list:
+		flags[q.question.qid] = True
+	
+	questions = zip(questions,flags)
 	#if 'time' not in request.session:
 	#	request.session['time'] = time.time()
 	if request.method == 'POST':
