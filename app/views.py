@@ -115,7 +115,7 @@ def challenges(request):
 
 @gzip_page
 def leaderboard(request):
-	users = CustomUser.objects.exclude(username='lakshya2020').order_by('-points')[:20]
+	users = CustomUser.objects.exclude(username='lakshya2020').order_by('-points')[:30]
 	leaderboard = list()
 	
 	for rank,user in zip(range(1,len(users)+1),users):
