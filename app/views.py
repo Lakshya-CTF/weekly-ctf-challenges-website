@@ -7,7 +7,6 @@ from django.views.decorators.gzip import gzip_page
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from validate_email import validate_email
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import strip_tags
@@ -44,10 +43,6 @@ def register(request):
 		u.first_name = request.POST.get('firstname')
 		u.last_name = request.POST.get('lastname')
 		u.email = request.POST.get('email')
-		is_valid = validate_email(u.email,verify=True)
-		if is_valid is None:
-			messages.error(request,'Enter a valid email address.')
-			return render(request,'app/register.html')
 		try:
 			u.clean_fields()
 			u.save()
@@ -65,7 +60,6 @@ def custom_login(request):
 	if request.method == 'POST':
 		username =  request.POST.get('username')
 		password = request.POST.get('password')
-		print(username,password)
 		user = authenticate(username=username,password=password)
 		if user is not None:
 			login(request,user)

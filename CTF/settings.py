@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,7 +32,6 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'app',
-    'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -116,10 +114,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-CSRF_COOKIE_SECURE = True
-CSRF_USE_SESSIONS= True
+SECURE_SSL_REDIRECT = False
+SECURE_BROWSER_XSS_FILTER = False
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS= False
 
 AUTH_USER_MODEL='app.CustomUser'
 # Static files (CSS, JavaScript, Images)
@@ -129,11 +127,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587 
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
+#EMAIL_HOST = 'smtp.gmail.com'
+#EMAIL_PORT = 587 
+#EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+#EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+#EMAIL_USE_TLS = True
 
-
-django_heroku.settings(locals())
